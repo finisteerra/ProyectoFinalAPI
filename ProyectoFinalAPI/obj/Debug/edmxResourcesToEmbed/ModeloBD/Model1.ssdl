@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProyectoProgramacionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bitacoras">
+    <Key>
+      <PropertyRef Name="ConsecutivoError" />
+    </Key>
+    <Property Name="ConsecutivoError" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FechaHora" Type="datetime" Nullable="false" />
+    <Property Name="MensajeError" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Origen" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ceviches">
+    <Key>
+      <PropertyRef Name="ConsecutivoCeviche" />
+    </Key>
+    <Property Name="ConsecutivoCeviche" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Precio" Type="numeric" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Errores">
+    <Key>
+      <PropertyRef Name="ConsecutivoError" />
+    </Key>
+    <Property Name="ConsecutivoError" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FechaHora" Type="datetime" Nullable="false" />
+    <Property Name="MensajeError" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Origen" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ConsecutivoUsuario" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Facturas">
+    <Key>
+      <PropertyRef Name="ConsecutivoFactura" />
+    </Key>
+    <Property Name="ConsecutivoFactura" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ConsecutivoUsuario" Type="bigint" Nullable="false" />
+    <Property Name="ConsecutivoPromocion" Type="bigint" Nullable="false" />
+    <Property Name="ConsecutivoSucursal" Type="bigint" Nullable="false" />
+    <Property Name="Total" Type="numeric" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Promociones">
+    <Key>
+      <PropertyRef Name="ConsecutivoPromocion" />
+    </Key>
+    <Property Name="ConsecutivoPromocion" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DescripcionPromocion" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Descuento" Type="numeric" Precision="10" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Proveedor_Ceviche">
+    <Key>
+      <PropertyRef Name="ConsecutivoProveedor" />
+      <PropertyRef Name="ConsecutivoCeviche" />
+    </Key>
+    <Property Name="ConsecutivoProveedor" Type="bigint" Nullable="false" />
+    <Property Name="ConsecutivoCeviche" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Proveedores">
+    <Key>
+      <PropertyRef Name="ConsecutivoProveedor" />
+    </Key>
+    <Property Name="ConsecutivoProveedor" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Apellido" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Compañia" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Pais" Type="nchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ConsecutivoRol" />
+    </Key>
+    <Property Name="ConsecutivoRol" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TipoRol" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sucursales">
+    <Key>
+      <PropertyRef Name="ConsecutivoSucursal" />
+    </Key>
+    <Property Name="ConsecutivoSucursal" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreSucursal" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="ConsecutivoUsuario" />
+    </Key>
+    <Property Name="ConsecutivoUsuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Edad" Type="int" Nullable="false" />
+    <Property Name="CorreoElectronico" Type="nvarchar" MaxLength="70" Nullable="false" />
+    <Property Name="Contrasenna" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+    <Property Name="Telefono" Type="int" Nullable="false" />
+    <Property Name="ConsecutivoRol" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuarios_Ceviches">
+    <Key>
+      <PropertyRef Name="ConsecutivoUsuario" />
+      <PropertyRef Name="ConsecutivoCeviche" />
+    </Key>
+    <Property Name="ConsecutivoUsuario" Type="bigint" Nullable="false" />
+    <Property Name="ConsecutivoCeviche" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Error__Consecuti__440B1D61">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+    <End Role="Errores" Type="Self.Errores" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="ConsecutivoUsuario" />
+      </Principal>
+      <Dependent Role="Errores">
+        <PropertyRef Name="ConsecutivoUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Facturas__Consec__60A75C0F">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+    <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="ConsecutivoUsuario" />
+      </Principal>
+      <Dependent Role="Facturas">
+        <PropertyRef Name="ConsecutivoUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Facturas__Consec__619B8048">
+    <End Role="Promociones" Type="Self.Promociones" Multiplicity="1" />
+    <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Promociones">
+        <PropertyRef Name="ConsecutivoPromocion" />
+      </Principal>
+      <Dependent Role="Facturas">
+        <PropertyRef Name="ConsecutivoPromocion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Facturas__Consec__628FA481">
+    <End Role="Sucursales" Type="Self.Sucursales" Multiplicity="1" />
+    <End Role="Facturas" Type="Self.Facturas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sucursales">
+        <PropertyRef Name="ConsecutivoSucursal" />
+      </Principal>
+      <Dependent Role="Facturas">
+        <PropertyRef Name="ConsecutivoSucursal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Proveedor__Conse__4AB81AF0">
+    <End Role="Proveedores" Type="Self.Proveedores" Multiplicity="1" />
+    <End Role="Proveedor_Ceviche" Type="Self.Proveedor_Ceviche" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedores">
+        <PropertyRef Name="ConsecutivoProveedor" />
+      </Principal>
+      <Dependent Role="Proveedor_Ceviche">
+        <PropertyRef Name="ConsecutivoProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Proveedor__Conse__4BAC3F29">
+    <End Role="Ceviches" Type="Self.Ceviches" Multiplicity="1" />
+    <End Role="Proveedor_Ceviche" Type="Self.Proveedor_Ceviche" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ceviches">
+        <PropertyRef Name="ConsecutivoCeviche" />
+      </Principal>
+      <Dependent Role="Proveedor_Ceviche">
+        <PropertyRef Name="ConsecutivoCeviche" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuario__Consecu__412EB0B6">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="ConsecutivoRol" />
+      </Principal>
+      <Dependent Role="Usuarios">
+        <PropertyRef Name="ConsecutivoRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuario_C__Conse__46E78A0C">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+    <End Role="Usuarios_Ceviches" Type="Self.Usuarios_Ceviches" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="ConsecutivoUsuario" />
+      </Principal>
+      <Dependent Role="Usuarios_Ceviches">
+        <PropertyRef Name="ConsecutivoUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Usuario_C__Conse__47DBAE45">
+    <End Role="Ceviches" Type="Self.Ceviches" Multiplicity="1" />
+    <End Role="Usuarios_Ceviches" Type="Self.Usuarios_Ceviches" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ceviches">
+        <PropertyRef Name="ConsecutivoCeviche" />
+      </Principal>
+      <Dependent Role="Usuarios_Ceviches">
+        <PropertyRef Name="ConsecutivoCeviche" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="ValidarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CorreoElectronico" Type="nvarchar" Mode="In" />
+    <Parameter Name="Contrasenna" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="ProyectoProgramacionModelStoreContainer">
+    <EntitySet Name="Bitacoras" EntityType="Self.Bitacoras" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ceviches" EntityType="Self.Ceviches" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Errores" EntityType="Self.Errores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Facturas" EntityType="Self.Facturas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Promociones" EntityType="Self.Promociones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Proveedor_Ceviche" EntityType="Self.Proveedor_Ceviche" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Proveedores" EntityType="Self.Proveedores" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Sucursales" EntityType="Self.Sucursales" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios_Ceviches" EntityType="Self.Usuarios_Ceviches" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Error__Consecuti__440B1D61" Association="Self.FK__Error__Consecuti__440B1D61">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Errores" EntitySet="Errores" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Facturas__Consec__60A75C0F" Association="Self.FK__Facturas__Consec__60A75C0F">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Facturas" EntitySet="Facturas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Facturas__Consec__619B8048" Association="Self.FK__Facturas__Consec__619B8048">
+      <End Role="Promociones" EntitySet="Promociones" />
+      <End Role="Facturas" EntitySet="Facturas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Facturas__Consec__628FA481" Association="Self.FK__Facturas__Consec__628FA481">
+      <End Role="Sucursales" EntitySet="Sucursales" />
+      <End Role="Facturas" EntitySet="Facturas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Proveedor__Conse__4AB81AF0" Association="Self.FK__Proveedor__Conse__4AB81AF0">
+      <End Role="Proveedores" EntitySet="Proveedores" />
+      <End Role="Proveedor_Ceviche" EntitySet="Proveedor_Ceviche" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Proveedor__Conse__4BAC3F29" Association="Self.FK__Proveedor__Conse__4BAC3F29">
+      <End Role="Ceviches" EntitySet="Ceviches" />
+      <End Role="Proveedor_Ceviche" EntitySet="Proveedor_Ceviche" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario__Consecu__412EB0B6" Association="Self.FK__Usuario__Consecu__412EB0B6">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Usuarios" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario_C__Conse__46E78A0C" Association="Self.FK__Usuario_C__Conse__46E78A0C">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Usuarios_Ceviches" EntitySet="Usuarios_Ceviches" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Usuario_C__Conse__47DBAE45" Association="Self.FK__Usuario_C__Conse__47DBAE45">
+      <End Role="Ceviches" EntitySet="Ceviches" />
+      <End Role="Usuarios_Ceviches" EntitySet="Usuarios_Ceviches" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
