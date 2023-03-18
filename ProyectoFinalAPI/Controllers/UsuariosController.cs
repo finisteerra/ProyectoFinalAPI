@@ -13,11 +13,13 @@ namespace ProyectoFinalAPI.Controllers
     {
         UsuariosModel modelUsuarios = new UsuariosModel();
 
+        [HttpPost]
+        [Route("api/ValidarUsuario")]
         public bool ValidarUsuario(UsuariosEnt entidad)
         {
             return modelUsuarios.ValidarUsuario(entidad);
         }
-        
+
         [HttpGet]
         [Route("api/BuscarCorreo")]
         public string BuscarCorreo(string ValidarCorreo)
