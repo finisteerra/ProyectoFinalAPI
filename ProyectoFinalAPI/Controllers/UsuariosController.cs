@@ -17,5 +17,19 @@ namespace ProyectoFinalAPI.Controllers
         {
             return modelUsuarios.ValidarUsuario(entidad);
         }
+        
+        [HttpGet]
+        [Route("api/BuscarCorreo")]
+        public string BuscarCorreo(string ValidarCorreo)
+        {
+            return modelUsuarios.BuscarCorreo(ValidarCorreo);
+        }
+
+        [HttpPost]
+        [Route("api/RecuperarContrasenna")]
+        public void RecuperarContrasenna(UsuariosEnt entidad)
+        {
+            modelUsuarios.RecuperarContrasenna(entidad);
+        }
     }
 }
