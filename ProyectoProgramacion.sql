@@ -145,8 +145,6 @@ ALTER TABLE [dbo].[Proveedor_Ceviche]  WITH CHECK ADD FOREIGN KEY([ConsecutivoCe
 REFERENCES [dbo].[Ceviches] ([ConsecutivoCeviche])
 GO
 
-
-
 ALTER TABLE [dbo].[Usuarios]  WITH CHECK ADD FOREIGN KEY([ConsecutivoRol])
 REFERENCES [dbo].[Roles] ([ConsecutivoRol])
 GO
@@ -171,6 +169,9 @@ REFERENCES [dbo].[Promociones] ([ConsecutivoPromocion])
 
 ALTER TABLE [dbo].[Facturas]  WITH CHECK ADD FOREIGN KEY([ConsecutivoSucursal])
 REFERENCES [dbo].[Sucursales] ([ConsecutivoSucursal])
+
+INSERT INTO [dbo].[Roles] (TipoRol) VALUES ('Usuario');
+INSERT INTO [dbo].[Roles] (TipoRol) VALUES ('Administrador');
 
 CREATE PROCEDURE [dbo].[ValidarUsuario]
 	@CorreoElectronico	NVARCHAR(70),
