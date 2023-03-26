@@ -1,4 +1,4 @@
-﻿using ProyectoFinalAPI.Entities;
+using ProyectoFinalAPI.Entities;
 using ProyectoFinalAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -25,6 +25,14 @@ namespace ProyectoFinalAPI.Controllers
         public string BuscarCorreo(string ValidarCorreo)
         {
             return modelUsuarios.BuscarCorreo(ValidarCorreo);
+        }
+
+        [HttpGet]
+        //[Authorize]
+        [Route("api/ConsultarUsuarios")]
+        public List<UsuariosEnt> ConsultarUsuarios()
+        {
+            return modelUsuarios.ConsultarUsuarios();
         }
 
         [HttpPost]
