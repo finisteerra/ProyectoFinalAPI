@@ -1,4 +1,4 @@
-﻿using ProyectoFinalAPI.Entities;
+using ProyectoFinalAPI.Entities;
 using ProyectoFinalAPI.ModeloBD;
 using System;
 using System.Collections.Generic;
@@ -19,6 +19,33 @@ namespace ProyectoFinalAPI.Models
                     return false;
 
                 return true;
+            }
+        }
+
+        public List<UsuariosEnt> ConsultarUsuarios()
+        {
+            using (var conexion = new ProyectoProgramacionEntities())
+            {
+                List<UsuariosEnt> respuesta = new List<UsuariosEnt>();
+                var datosBD = (from x in conexion.Usuarios
+                               select x).ToList();
+
+                if (datosBD.Count > 0)
+                {
+                    foreach (var item in datosBD)
+                    {
+                        respuesta.Add(new UsuariosEnt
+                        {
+                            ConsecutivoUsuario = item.ConsecutivoUsuario,
+                            CorreoElectronico = item.CorreoElectronico,
+                            Estado = item.Estado,
+                            Nombre = item.Nombre,
+                            //Identificacion = item.Identificacion
+                        });
+                    }
+                }
+
+                return respuesta;
             }
         }
 
