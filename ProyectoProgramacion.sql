@@ -126,6 +126,27 @@ CREATE TABLE [dbo].[Facturas](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 
+CREATE TABLE [dbo].[Proveedor_Ceviche](
+	[ConsecutivoProveedor] [bigint] NOT NULL,
+	[ConsecutivoCeviche] [bigint] NOT NULL,
+ CONSTRAINT [PK_Provedor_Ceviche] PRIMARY KEY CLUSTERED 
+(
+	[ConsecutivoProveedor] ASC,
+	[ConsecutivoCeviche] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Proveedor_Ceviche]  WITH CHECK ADD FOREIGN KEY([ConsecutivoProveedor])
+REFERENCES [dbo].[Proveedores] ([ConsecutivoProveedor])
+GO
+
+ALTER TABLE [dbo].[Proveedor_Ceviche]  WITH CHECK ADD FOREIGN KEY([ConsecutivoCeviche])
+REFERENCES [dbo].[Ceviches] ([ConsecutivoCeviche])
+GO
+
+
+
 ALTER TABLE [dbo].[Usuarios]  WITH CHECK ADD FOREIGN KEY([ConsecutivoRol])
 REFERENCES [dbo].[Roles] ([ConsecutivoRol])
 GO
