@@ -15,7 +15,7 @@ namespace ProyectoFinalAPI.Controllers
 
         [HttpPost]
         [Route("api/ValidarUsuario")]
-        public bool ValidarUsuario(UsuariosEnt entidad)
+        public UsuariosEnt ValidarUsuario(UsuariosEnt entidad)
         {
             return modelUsuarios.ValidarUsuario(entidad);
         }
