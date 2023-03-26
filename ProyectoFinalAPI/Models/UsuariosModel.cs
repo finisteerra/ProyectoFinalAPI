@@ -14,11 +14,16 @@ namespace ProyectoFinalAPI.Models
         {
             using (var conexion = new ProyectoProgramacionEntities())
             {
-                var respuesta = conexion.ValidarUsuario(entidad.CorreoElectronico, entidad.Contrasenna).FirstOrDefault();
-                if (respuesta == null)
-                    return false;
+                UsuariosEnt respuesta = new UsuariosEnt();
 
-                return true;
+                var datosDB = conexion.ValidarUsuario(entidad.CorreoElectronico, entidad.Contrasenna).FirstOrDefault();
+                if (datosDB != null)
+                {
+                    respuesta.ConsecutivoUsuario = datosDB.ConsecutivoUsuario;
+                    respuesta.CorreoElectronico = datosDB.CorreoElectronico;
+                }
+                    
+                return respuesta;
             }
         }
 
