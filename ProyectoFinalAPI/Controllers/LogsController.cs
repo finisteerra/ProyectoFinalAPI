@@ -17,6 +17,7 @@ namespace ProyectoFinalAPI.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("api/RegistrarBitacora")]
         public void RegistrarBitacora(LogsEnt entidad)
         {
