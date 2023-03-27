@@ -19,11 +19,13 @@ namespace ProyectoFinalAPI.Entities
 
         public string Token { get; set; }
 
-        public string Identificacion { get; set; }
-
         public string Nombre { get; set; }
 
-        public byte IdProvincia { get; set; }
+        public string Apellido { get; set; }
+
+        public int Edad { get; set; }
+
+        public int Telefono { get; set; }
 
         public long Rol { get; set; }
 
