@@ -38,10 +38,10 @@ GO
 
 CREATE TABLE [dbo].[Proveedores](
 	[ConsecutivoProveedor] [bigint] IDENTITY(1,1) NOT NULL,
-	[Nombre] [nchar](10) NOT NULL,
-	[Apellido] [nchar](10) NOT NULL,
-	[Compañia] [nchar](10) NOT NULL,
-	[Pais] [nchar](10) NOT NULL,
+	[Nombre] [nvarchar](50) NOT NULL,
+	[Apellido] [nvarchar](50) NOT NULL,
+	[Compañia] [nvarchar](100) NOT NULL,
+	[Pais] [nvarchar](70) NOT NULL,
  CONSTRAINT [PK_Provedor] PRIMARY KEY CLUSTERED 
 (
 	[ConsecutivoProveedor] ASC
@@ -90,17 +90,6 @@ CREATE TABLE [dbo].[Usuarios](
 ) ON [PRIMARY]
 GO
 
-CREATE TABLE [dbo].[Usuarios_Ceviches](
-	[ConsecutivoUsuario] [bigint] NOT NULL,
-	[ConsecutivoCeviche] [bigint] NOT NULL,
- CONSTRAINT [PK_Usuario_Ceviche] PRIMARY KEY CLUSTERED 
-(
-	[ConsecutivoUsuario] ASC,
-	[ConsecutivoCeviche] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-
 CREATE TABLE [dbo].[Errores](
 	[ConsecutivoError] [bigint] IDENTITY(1,1) NOT NULL,
 	[FechaHora] [datetime] NOT NULL,
@@ -126,7 +115,18 @@ CREATE TABLE [dbo].[Facturas](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 
-CREATE TABLE [dbo].[Proveedor_Ceviche](
+CREATE TABLE [dbo].[Usuarios_Ceviches](
+	[ConsecutivoUsuario] [bigint] NOT NULL,
+	[ConsecutivoCeviche] [bigint] NOT NULL,
+ CONSTRAINT [PK_Usuario_Ceviche] PRIMARY KEY CLUSTERED 
+(
+	[ConsecutivoUsuario] ASC,
+	[ConsecutivoCeviche] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[Proveedores_Ceviches](
 	[ConsecutivoProveedor] [bigint] NOT NULL,
 	[ConsecutivoCeviche] [bigint] NOT NULL,
  CONSTRAINT [PK_Provedor_Ceviche] PRIMARY KEY CLUSTERED 
@@ -137,11 +137,11 @@ CREATE TABLE [dbo].[Proveedor_Ceviche](
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[Proveedor_Ceviche]  WITH CHECK ADD FOREIGN KEY([ConsecutivoProveedor])
+ALTER TABLE [dbo].[Proveedores_Ceviches]  WITH CHECK ADD FOREIGN KEY([ConsecutivoProveedor])
 REFERENCES [dbo].[Proveedores] ([ConsecutivoProveedor])
 GO
 
-ALTER TABLE [dbo].[Proveedor_Ceviche]  WITH CHECK ADD FOREIGN KEY([ConsecutivoCeviche])
+ALTER TABLE [dbo].[Proveedores_Ceviches]  WITH CHECK ADD FOREIGN KEY([ConsecutivoCeviche])
 REFERENCES [dbo].[Ceviches] ([ConsecutivoCeviche])
 GO
 
@@ -170,8 +170,21 @@ REFERENCES [dbo].[Promociones] ([ConsecutivoPromocion])
 ALTER TABLE [dbo].[Facturas]  WITH CHECK ADD FOREIGN KEY([ConsecutivoSucursal])
 REFERENCES [dbo].[Sucursales] ([ConsecutivoSucursal])
 
-INSERT INTO [dbo].[Roles] (TipoRol) VALUES ('Usuario');
-INSERT INTO [dbo].[Roles] (TipoRol) VALUES ('Administrador');
+INSERT INTO [dbo].[Ceviches]([Descripcion],[Precio],[Cantidad])  VALUES('Ceviche de camaron con piña picada',5500.00,50);
+INSERT INTO [dbo].[Ceviches]([Descripcion],[Precio],[Cantidad])  VALUES('Ceviche de mariscos con vinagreta de chile serrano',7000.99,60);
+INSERT INTO [dbo].[Ceviches]([Descripcion],[Precio],[Cantidad])  VALUES('Ceviche en tostadas con coco',4000.00,30);
+INSERT INTO [dbo].[Ceviches]([Descripcion],[Precio],[Cantidad])  VALUES('Ceviche con champiñones',5000.00,10);
+
+INSERT INTO [dbo].[Proveedores] ([Nombre],[Apellido],[Compañia],[Pais]) VALUES ('Daniel','Martinez','La Gran Bahia','España');
+INSERT INTO [dbo].[Proveedores] ([Nombre],[Apellido],[Compañia],[Pais]) VALUES ('Luis','Stone','The Lobster Coast','Estados Unidos');
+
+INSERT INTO [dbo].[Sucursales] ([NombreSucursal]) VALUES ('San Jose');
+INSERT INTO [dbo].[Sucursales] ([NombreSucursal]) VALUES ('Heredia');
+INSERT INTO [dbo].[Sucursales] ([NombreSucursal]) VALUES ('Cartago');
+INSERT INTO [dbo].[Sucursales] ([NombreSucursal]) VALUES ('Alajuela');
+
+INSERT INTO [dbo].[Roles] ([TipoRol]) VALUES('Usuario');
+INSERT INTO [dbo].[Roles] ([TipoRol]) VALUES('Administrador');
 
 CREATE PROCEDURE [dbo].[ValidarUsuario]
 	@CorreoElectronico	NVARCHAR(70),
@@ -187,5 +200,19 @@ BEGIN
 		AND Contrasenna		  = @Contrasenna
 		AND Estado			  = 1
 
+END
+GO
+
+CREATE OR ALTER PROCEDURE [dbo].[RegistrarUsuario] 
+	@Nombre	NVARCHAR(50),
+	@Apellido NVARCHAR(50),
+	@Edad int,
+	@Telefono int,
+	@CorreoElectronico	NVARCHAR(70),
+	@Contrasenna		NVARCHAR(10)
+AS
+BEGIN
+	INSERT INTO dbo.Usuarios (Nombre,Apellido,Edad,CorreoElectronico,Contrasenna,Estado,Telefono,ConsecutivoRol)
+     VALUES(@Nombre,@Apellido, @Edad, @CorreoElectronico,@Contrasenna,1,@Telefono,1)
 END
 GO
