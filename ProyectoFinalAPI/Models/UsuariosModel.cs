@@ -10,7 +10,7 @@ namespace ProyectoFinalAPI.Models
     public class UsuariosModel
     {
         LogsModel modelLogs = new LogsModel();
-        public bool ValidarUsuario(UsuariosEnt entidad)
+        public UsuariosEnt ValidarUsuario(UsuariosEnt entidad)
         {
             using (var conexion = new ProyectoProgramacionEntities())
             {
@@ -100,8 +100,6 @@ namespace ProyectoFinalAPI.Models
                 }
             }
         }
-
-
 
     }
 
