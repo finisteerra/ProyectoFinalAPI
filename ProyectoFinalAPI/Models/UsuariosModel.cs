@@ -42,15 +42,26 @@ namespace ProyectoFinalAPI.Models
                         respuesta.Add(new UsuariosEnt
                         {
                             ConsecutivoUsuario = item.ConsecutivoUsuario,
+                            Nombre = item.Nombre,
+                            Apellido = item.Apellido,
+                            Edad = item.Edad,
+                            Telefono = item.Telefono,
                             CorreoElectronico = item.CorreoElectronico,
                             Estado = item.Estado,
-                            Nombre = item.Nombre,
-                            //Identificacion = item.Identificacion
                         });
                     }
                 }
 
                 return respuesta;
+            }
+        }
+
+        public int RegistrarUsuario(UsuariosEnt entidad)
+        {
+            using (var conexion = new ProyectoProgramacionEntities())
+            {
+                return conexion.RegistrarUsuario(entidad.Nombre, entidad.Apellido, entidad.Edad, entidad.Telefono, 
+                    entidad.CorreoElectronico, entidad.Contrasenna);
             }
         }
 
