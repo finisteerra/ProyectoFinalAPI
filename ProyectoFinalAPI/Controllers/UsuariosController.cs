@@ -14,17 +14,11 @@ namespace ProyectoFinalAPI.Controllers
         UsuariosModel modelUsuarios = new UsuariosModel();
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("api/ValidarUsuario")]
         public UsuariosEnt ValidarUsuario(UsuariosEnt entidad)
         {
             return modelUsuarios.ValidarUsuario(entidad);
-        }
-
-        [HttpGet]
-        [Route("api/BuscarCorreo")]
-        public string BuscarCorreo(string ValidarCorreo)
-        {
-            return modelUsuarios.BuscarCorreo(ValidarCorreo);
         }
 
         [HttpGet]
@@ -35,7 +29,24 @@ namespace ProyectoFinalAPI.Controllers
             return modelUsuarios.ConsultarUsuarios();
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("api/BuscarCorreo")]
+        public string BuscarCorreo(string ValidarCorreo)
+        {
+            return modelUsuarios.BuscarCorreo(ValidarCorreo);
+        }
+
         [HttpPost]
+        [AllowAnonymous]
+        [Route("api/RegistrarUsuario")]
+        public int RegistrarUsuario(UsuariosEnt entidad)
+        {
+            return modelUsuarios.RegistrarUsuario(entidad);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
         [Route("api/RecuperarContrasenna")]
         public void RecuperarContrasenna(UsuariosEnt entidad)
         {
